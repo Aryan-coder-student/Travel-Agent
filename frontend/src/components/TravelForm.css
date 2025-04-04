@@ -1,15 +1,41 @@
+/* Dark theme for Travel Planner */
+:root {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-elevated: #2d2d2d;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --accent: #bb86fc; /* Purple accent */
+  --accent-hover: #9d65ea;
+  --error: #cf6679;
+  --input-bg: #2d2d2d;
+  --border: #3d3d3d;
+  --border-focus: #bb86fc;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+}
+
 .travel-form-container {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
   text-align: center;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.travel Planner {
-  font-size: 24px;
-  color: #2c3e50;
-  margin-bottom: 20px;
+h1 {
+  font-size: 28px;
+  color: var(--accent);
+  margin-bottom: 25px;
+  font-weight: 600;
 }
 
 .travel-form {
@@ -26,93 +52,129 @@
 
 .form-group label {
   font-size: 16px;
-  margin-bottom: 5px;
-  color: #333;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  font-weight: 500;
 }
 
 .form-group input {
-  padding: 10px;
+  padding: 12px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   border-radius: 5px;
   outline: none;
-  transition: border-color 0.3s;
+  transition: all 0.3s ease;
+  background-color: var(--input-bg);
+  color: var(--text-primary);
 }
 
 .form-group input:focus {
-  border-color: #007bff;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px rgba(187, 134, 252, 0.3);
 }
 
 .form-group input[readOnly] {
-  background-color: #f0f0f0;
+  background-color: rgba(45, 45, 45, 0.5);
   cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .helper-text {
   font-size: 12px;
-  color: #666;
+  color: var(--text-secondary);
   margin-top: 5px;
 }
 
 .child-age-group {
-  margin-top: 10px;
+  margin-top: 12px;
   padding-left: 20px;
+  border-left: 2px solid var(--border);
 }
 
 button {
-  padding: 12px;
+  padding: 14px;
   font-size: 16px;
-  background-color: #e0e0e0;
+  background-color: var(--accent);
+  color: #121212;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 10px;
 }
 
 button:hover {
-  background-color: #d0d0d0;
+  background-color: var(--accent-hover);
 }
 
 button:disabled {
-  background-color: #f0f0f0;
+  background-color: rgba(187, 134, 252, 0.3);
   cursor: not-allowed;
 }
 
 .error-message {
-  color: red;
+  color: var(--error);
   margin-top: 10px;
+  padding: 10px;
+  background-color: rgba(207, 102, 121, 0.1);
+  border-radius: 5px;
+  text-align: center;
 }
 
 .itinerary-container {
-  margin-top: 20px;
+  margin-top: 30px;
   text-align: left;
+  background-color: var(--bg-elevated);
+  padding: 20px;
+  border-radius: 8px;
 }
 
 .itinerary-container h2 {
-  color: #2c3e50;
-  margin-bottom: 10px;
+  color: var(--accent);
+  margin-bottom: 15px;
+  font-weight: 500;
 }
 
 .markdown-content {
-  background: #f9f9f9;
+  background: var(--bg-elevated);
   padding: 15px;
   border-radius: 5px;
   overflow-x: auto;
+  color: var(--text-primary);
+  line-height: 1.6;
 }
 
-.markdown-content h1, .markdown-content h2, .markdown-content h3 {
-  color: #2c3e50;
+.markdown-content h1, 
+.markdown-content h2, 
+.markdown-content h3 {
+  color: var(--accent);
 }
 
-.markdown-content ul, .markdown-content ol {
+.markdown-content ul, 
+.markdown-content ol {
   padding-left: 20px;
+  color: var(--text-primary);
 }
 
 .markdown-content a {
-  color: #007bff;
+  color: var(--accent);
   text-decoration: none;
 }
 
 .markdown-content a:hover {
   text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .travel-form-container {
+    padding: 15px;
+    width: 90%;
+  }
+  
+  .form-group input {
+    padding: 10px;
+  }
 }

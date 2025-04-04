@@ -157,6 +157,7 @@ def get_hotel_details(request: HotelRequest):
         search = GoogleSearch(params)
         results = search.get_dict()
         properties = results.get("properties", [])
+        print(properties)
         if not properties:
             break
         all_properties.extend(properties)
@@ -296,19 +297,60 @@ def generate_travel_plan(user_input):
     })
     
     prompt_template = """
-    You are an AI Travel Assistant. Based on the retrieved travel details and user constraints, create a detailed travel plan.
+    You are an expert AI Travel Assistant creating a comprehensive travel itinerary. Based on the user's constraints and the retrieved travel data, generate a detailed, day-by-day travel plan with all necessary information.
 
-    User Constraints:
-    - Budget: INR {budget}
-    - Duration: {days} days
+    USER REQUIREMENTS:
+    - Traveling from: {from_city}
     - Destination: {to_city}
-    - current city: {from_city}
+    - Trip duration: {days} days
+    - Budget: INR {budget}
+    - Departure date: {departure_date}
+    - Return date: {return_date}
+    - Travelers: {num_adults} adults, {num_children} children (ages: {children_ages})
 
-    Travel Data:
+    INSTRUCTIONS:
+    1. Create a detailed day-by-day itinerary including:
+       - Morning, afternoon, and evening activities each day
+       - Travel time estimates between locations
+       - Recommended time spent at each attraction
+       - Meal suggestions with restaurant options
+    2. For each recommended item include:
+       - Name and brief description
+       - Pricing information (entry fees, meal costs, etc.)
+       - Exact location (address or coordinates)
+       - Booking links or contact information when available
+       - Estimated time required for the activity
+    3. Include comprehensive transportation details:
+       - Flight/train options with prices, timings, and booking links
+       - Local transportation options (metro, taxi, rideshare)
+       - Estimated costs for each transportation method
+    4. Provide accommodation recommendations:
+       - 3-5 hotel options matching the budget
+       - Amenities and important features
+       - Distance from key attractions
+       - Booking links and cancellation policies
+    5. Add special sections for:
+       - Packing suggestions based on weather and activities
+       - Local customs and etiquette tips
+       - Emergency contact information
+       - Money-saving tips specific to the destination
+    6. Format the output clearly with:
+       - Daily headings with dates
+       - Time-based schedules
+       - Clear section dividers
+       - Important information highlighted
+       - Consistent formatting for prices, times, and locations
+
+    TRAVEL DATA CONTEXT:
     {context}
 
-    Output day-wise itinerary including flights, hotels, Restaurant details, recommended tourist places, share their location link also or co-ordinates of the map.
-    Also provide sources for each recommendation and available flights from the current city to the destination city.
+    OUTPUT REQUIREMENTS:
+    - Start with an executive summary of the trip
+    - Include a daily breakdown with time allocations
+    - Provide multiple options where applicable
+    - End with a budget breakdown and total cost estimate
+    - Format for easy reading with clear section headers
+    - source and links for all recommendations
     """
 
     qa_chain = RetrievalQA.from_chain_type(llm, retriever=retriever)
@@ -317,11 +359,15 @@ def generate_travel_plan(user_input):
         days=user_input["days"],
         to_city=user_input["to_city"],
         from_city=user_input["from_city"],
+        departure_date=user_input["departure_date"],
+        return_date=user_input["return_date"],
+        num_adults=user_input["num_adults"],
+        num_children=user_input["num_children"],
+        children_ages=user_input["children_ages"],
         context="{context}"  
     ))
 
     return response
-
 
 class TravelRequest(BaseModel):
     from_city: str
