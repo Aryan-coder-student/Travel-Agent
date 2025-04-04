@@ -1,0 +1,5 @@
+notebook/.env
+API/.env
+chroma_db
+API/chroma_db
+.env
